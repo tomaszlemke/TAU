@@ -1,5 +1,8 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+
 import logging
+import time
 
 logger = logging.getLogger('simple_example')
 logger.setLevel(logging.INFO)
@@ -9,15 +12,23 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-driver = webdriver.Chrome(executable_path='C:/Users/u6071468/PycharmProjects/TAU/chromedriver.exe')
+driverChrome = webdriver.Chrome(executable_path='C:/Users/u6071468/PycharmProjects/TAU/chromedriver.exe')
 
 logger.info('Przechodzę na stronę Zalando')
-driver.get('https://www.zalando.pl/')
-temp = driver.find_element_by_class_name('z-navicat-header_navToolItemLink')
+driverChrome.get('https://www.zalando.pl/')
+temp = driverChrome.find_element(By.CLASS_NAME, 'z-navicat-header_navToolItemLink')
 temp.click()
 logger.warning('Jakieś ostrzeżenie')
-temp = driver.find_element_by_id('login.email')
+time.sleep(2)
+
+temp = driverChrome.find_element(By.ID, 'login.email')
+temp.click()
+time.sleep(2)
 temp.send_keys("login")
 logger.error('Jakiś Error')
+time.sleep(2)
 
-driver.close()
+temp = driverChrome.find_element(By.XPATH, '//*[@id="sso"]/div/div[2]/main/div/div[2]/div/div/div/div/a')
+temp.click()
+time.sleep(2)
+driverChrome.close()
